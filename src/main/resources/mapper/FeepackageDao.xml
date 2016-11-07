@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.alipay.dao.FeepackageDao">
+
+	<update id="reduceStockCount">
+		update FeePackage
+		<set>
+			<if test="leastPurchase!=null">
+				stockCount=<![CDATA[stockCount-#{leastPurchase}]]>
+			</if>
+		</set>
+		<where>
+			<if test="feepackageId!=null">
+				id=#{feepackageId}
+			</if>
+			<if test="leastPurchase!=null">
+				and	<![CDATA[stockCount>#{leastPurchase}]]>
+			</if>
+		</where>
+	</update>
+
+	<select id="queryAll" resultType="Feepackage">
+		select
+		id,
+		number,
+		name,
+		description,
+		provider,
+		phone,
+		price,
+		discount,
+		leastPurchase,
+		status,
+		creator,
+		type,
+		payType,
+		chargingWay,
+		stockCount,
+		soldCount,
+		flux
+		FROM FeePackage
+		<where>
+			<if test="type!=null">
+				type=#{type}
+			</if>
+			and status=0
+			and stockCount>0
+		</where>
+		order by createTime desc
+		<if test="offset!=null and limit!=null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+
+	<select id="queryById" parameterType="Integer" resultType="Feepackage">
+		select
+		id,
+		number,
+		name,
+		description,
+		provider,
+		phone,
+		price,
+		discount,
+		leastPurchase,
+		status,
+		creator,
+		createTime,
+		lastUpdateTime,
+		type,
+		payType,
+		chargingWay,
+		stockCount,
+		soldCount,
+		flux
+		FROM FeePackage
+		where
+		id=#{feepackageId}
+	</select>
+
+	<update id="addSoldCount">
+		update FeePackage
+		<set>
+			<if test="leastPurchase!=null">
+				soldCount=soldCount+#{leastPurchase}
+			</if>
+		</set>
+		where id=#{feepackageId}
+	</update>
+
+
+	<update id="addStockCount">
+		update FeePackage
+		<set>
+			<if test="leastPurchase!=null">
+				stockCount=soldCount+#{leastPurchase}
+			</if>
+		</set>
+		where id=#{feepackageId}
+	</update>
+
+
+</mapper>

@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+body {
+	background: url(../image/pay_success.png) top center no-repeat;
+	background-size: cover;
+}
+
+.second{
+	font-size: 22px;
+	color: #bc9d30;
+	width: 16px;
+	height:22px; 
+	margin-top: 245px;
+	margin-left: 429px;
+}

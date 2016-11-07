@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+body {
+	background: url(../image/404.png) top center no-repeat;
+	background-size: cover;
+}

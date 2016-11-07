@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ap500-alipay:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="ap500-alipay.war">
+      <element id="artifact" artifact-name="ap500-alipay:war exploded" />
+    </root>
+  </artifact>
+</component>

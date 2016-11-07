@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.alipay.dao.MypackageDao">
+
+	<insert id="insertMypackage">
+		insert into MyPackage(
+		packageId,
+		createTime,
+		startTime,
+		endTime,
+		packageType,
+		chargingWay,
+		userId
+		)
+		values(
+		#{feepackageId},
+		now(),
+		#{startTime},
+		#{endTime},
+		#{packageType},
+		#{chargingWay},
+		#{userId}
+		);
+	</insert>
+
+	<select id="queryByUserIdAndPackageType" resultType="Mypackage">
+		select
+		m.id ,
+		m.packageType,
+		m.startTime,
+		m.endTime,
+	    m.userId ,
+		f.id "feepackage.id",
+		f.name "feepackage.name",
+		f.description "feepackage.description",
+		f.flux "feepackage.flux",
+		f.type "feepackage.type",
+		f.payType "feepackage.payType",
+		f.number "feepackage.number"
+		from MyPackage m
+		inner join FeePackage f on
+		m.packageId=f.id
+		<where>
+			<if test="packageType!=null">
+				and packageType=#{packageType}
+			</if>
+			<if test="userId!=null">
+				and m.userId=#{userId}
+			</if>
+		</where>
+		order by id asc
+	</select>
+	
+	
+	
+	<delete id="deleteMypackage">
+		delete from MyPackage where  <![CDATA[endTime<now()]]>
+	</delete>
+
+</mapper>
